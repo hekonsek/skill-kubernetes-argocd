@@ -15,7 +15,11 @@ resource "helm_release" "argocd" {
   wait              = var.wait
   wait_for_jobs     = var.wait_for_jobs
 
-  values        = var.values
-  set           = var.set_values
+  values = var.values
+  set = concat(var.set_values, [{
+    name  = "configs.params.application\\.namespaces"
+    value = "*"
+    type  = "string"
+  }])
   set_sensitive = var.set_sensitive_values
 }

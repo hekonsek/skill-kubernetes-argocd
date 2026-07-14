@@ -32,6 +32,10 @@ The default chart version requires Kubernetes 1.25 or newer. Review the
 [upstream chart upgrade notes](https://github.com/argoproj/argo-helm/tree/main/charts/argo-cd)
 before changing `chart_version` across a major release.
 
+Argo CD is configured to monitor `Application` resources in every namespace.
+Each `AppProject` must still explicitly allow the namespaces it serves through
+its `spec.sourceNamespaces` field.
+
 Sensitive data should be passed through `set_sensitive_values` or, preferably,
 managed by an external secrets system. Terraform still stores sensitive values
 in state, so ensure the state backend is appropriately protected.
