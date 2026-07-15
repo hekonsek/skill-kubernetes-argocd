@@ -60,7 +60,10 @@ run "custom_configuration" {
   }
 
   assert {
-    condition     = helm_release.argocd.set[0].value == "argocd.example.com"
+    condition = one([
+      for item in helm_release.argocd.set : item
+      if item.name == "global.domain"
+    ]).value == "argocd.example.com"
     error_message = "Custom set values must be passed to Helm."
   }
 }
